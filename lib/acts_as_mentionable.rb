@@ -32,7 +32,10 @@ module ActsAsMentionable
     end
 
     def glue
-      # 
+      # implement me
     end
+  end
+
+  class Configuration
   end
 end
