@@ -4,6 +4,7 @@ require 'active_support/core_ext/module'
 
 begin
   require 'acts_as_mentionable/engine'
+  require 'acts_as_mentionable/configuration'
 rescue LoadError
 end
 
@@ -36,6 +37,14 @@ module ActsAsMentionable
     end
   end
 
-  class Configuration
-  end
+  setup
+end
+
+ActiveSupport.on_load(:active_record) do
+  # extend ActsAsMentionable::Mentionable
+  # include ActsAsMentionable::Mentioner
+end
+
+ActiveSupport.on_load(:action_view) do
+  # include ActsAsMentionable::FormHelper ... etc
 end

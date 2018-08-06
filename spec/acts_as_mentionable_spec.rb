@@ -3,6 +3,6 @@ RSpec.describe ActsAsMentionable do
     expect(ActsAsMentionable::VERSION).not_to be nil
   end
 
-  fit 'does something useful' do
+  xit 'does something useful' do
   end
 end
