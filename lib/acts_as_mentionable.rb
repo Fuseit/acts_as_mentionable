@@ -1,14 +1,12 @@
 require 'acts_as_mentionable/version'
 
 require 'active_record'
-require 'active_record/version'
-require 'active_support/core_ext/module'
 
 begin
   require 'rails/engine'
   require 'acts_as_mentionable/engine'
 rescue LoadError
-  pp 'Failed to load rails engine'
+  puts 'Failed to load rails engine'
 end
 
 module ActsAsMentionable
@@ -42,14 +40,17 @@ module ActsAsMentionable
   end
 
   class Configuration
-    attr_accessor :force_lowercase,
+    attr_accessor \
+      :force_lowercase,
       # :default_parser,
-      :mentions_table
+      :mentions_table,
+      :event_publisher_class
 
     def initialize
       @force_lowercase = false
       # @default_parser = DefaultParser
       @mentions_table = :acts_as_mentionable_mentions
+      @event_publisher_class = EventPublisher
     end
   end
 

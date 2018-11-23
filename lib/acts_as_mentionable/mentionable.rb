@@ -7,8 +7,6 @@ module ActsAsMentionable
         as: :mentionable,
         dependent: :delete_all,
         class_name: '::ActsAsMentionable::Mention'
-
-      ::ActsAsMentionable::EventPublisher.subscribe self, prefix: true
     end
 
     def mentionable?

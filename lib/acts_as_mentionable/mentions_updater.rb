@@ -30,7 +30,7 @@ module ActsAsMentionable
       end
 
       def event_publisher
-        @event_publisher ||= ActsAsMentionable::EventPublisher.new mentioner, changes
+        @event_publisher ||= ActsAsMentionable.event_publisher_class.new mentioner, changes
       end
   end
 end
