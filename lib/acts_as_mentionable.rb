@@ -3,12 +3,13 @@ require 'acts_as_mentionable/version'
 require 'active_record'
 require 'active_record/version'
 require 'active_support/core_ext/module'
+require 'wisper'
 
 begin
   require 'rails/engine'
   require 'acts_as_mentionable/engine'
 rescue LoadError
-  pp 'Failed to load rails engine'
+  p 'Failed to load rails engine'
 end
 
 module ActsAsMentionable

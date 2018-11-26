@@ -2,7 +2,7 @@ RSpec.describe ActsAsMentionable::MentionsUpdater do
   describe '#call' do
     subject(:call) { described_class.new(mentioner, changes).call }
 
-    let(:mentioner) { build :comment }
+    let(:mentioner) { ActsAsMentionable::DummyMentioner.new }
     let(:changes) { { added: added, removed: removed } }
     let(:added) { [double] }
     let(:removed) { [double] }

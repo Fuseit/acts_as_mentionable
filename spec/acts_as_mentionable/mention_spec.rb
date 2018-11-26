@@ -1,6 +1,6 @@
 RSpec.describe ActsAsMentionable::Mention do
-  let(:comment) { create :comment }
-  let(:user) { create :user }
+  let(:comment) { ActsAsMentionable::DummyMentioner.create  }
+  let(:user) { ActsAsMentionable::DummyMentionee.create  }
 
   let(:mention) { create :acts_as_mentionable_mention, mentioner: comment, mentionable: user }
 
@@ -49,7 +49,7 @@ RSpec.describe ActsAsMentionable::Mention do
   describe '.add_mentionables_for_mentioner', :with_mentions do
     subject(:add) { -> { described_class.add_mentionables_for_mentioner comment, new_user } }
 
-    let(:new_user) { create :user }
+    let(:new_user) { ActsAsMentionable::DummyMentionee.create }
 
     it { is_expected.to change { described_class.count }.by(1) }
     it { is_expected.to change { described_class.by_mentionables(new_user).exists? }.from(false).to(true) }
