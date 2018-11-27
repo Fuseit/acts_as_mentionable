@@ -1,8 +1,18 @@
+<<<<<<< HEAD
 # Ruby CircleCI 2.0 configuration file
 #
 # Check https://circleci.com/docs/2.0/language-ruby/ for more details
 #
 version: 2
+=======
+version: 2.0
+
+ruby_machine: &ruby_machine
+  image: circleci/ruby:2.3.4
+  environment:
+    RAILS_ENV: test
+
+>>>>>>> chore CHORE config adjust
 jobs:
   build:
     docker:
@@ -14,7 +24,6 @@ jobs:
       # - image: circleci/postgres:9.4
 
     working_directory: ~/acts_as_mentionable
-
     steps:
       - checkout
 
