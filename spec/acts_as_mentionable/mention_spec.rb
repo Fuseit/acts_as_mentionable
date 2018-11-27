@@ -29,7 +29,6 @@ RSpec.describe ActsAsMentionable::Mention do
   describe '.by_mentionables', :with_mentions do
     subject(:mentionables) { described_class.by_mentionables(provided_mentionable).to_a }
 
-
     let(:provided_mentionable) { mentionable }
 
     it { is_expected.to eq [mention] }

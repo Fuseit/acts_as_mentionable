@@ -3,7 +3,6 @@ RSpec.describe ActsAsMentionable::Mentioner do
   let(:mentioner) { Mentioner.create! }
   let(:mentionables) { 2.times.map { Mentionable.create! } }
 
-
   let :mentions do
     ActsAsMentionable::Mention.create! mentioner: Mentioner.create!, mentionable: Mentionable.create!
 

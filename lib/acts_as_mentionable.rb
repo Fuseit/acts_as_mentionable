@@ -1,14 +1,11 @@
-require 'acts_as_mentionable/version'
-
 require 'active_record'
-require 'active_record/version'
-require 'active_support/core_ext/module'
+require 'acts_as_mentionable/version'
 
 begin
   require 'rails/engine'
   require 'acts_as_mentionable/engine'
 rescue LoadError
-  p 'Failed to load rails engine'
+  puts 'Rails enviroment is not detected - database migrations are not appended.'
 end
 
 module ActsAsMentionable
@@ -43,14 +40,10 @@ module ActsAsMentionable
 
   class Configuration
     attr_accessor \
-      :force_lowercase,
-      # :default_parser,
       :mentions_table,
       :event_publisher_class
 
     def initialize
-      @force_lowercase = false
-      # @default_parser = DefaultParser
       @mentions_table = :acts_as_mentionable_mentions
       @event_publisher_class = EventPublisher
     end

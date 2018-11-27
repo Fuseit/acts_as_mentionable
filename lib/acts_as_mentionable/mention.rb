@@ -12,7 +12,7 @@
 #
 
 module ActsAsMentionable
-  class Mention < ActiveRecord::Base
+  class Mention < ::ActiveRecord::Base
     self.table_name = ActsAsMentionable.mentions_table
 
     belongs_to :mentioner, polymorphic: true
