@@ -3,7 +3,6 @@ require 'acts_as_mentionable/version'
 require 'active_record'
 require 'active_record/version'
 require 'active_support/core_ext/module'
-require 'wisper'
 
 begin
   require 'rails/engine'
@@ -43,14 +42,17 @@ module ActsAsMentionable
   end
 
   class Configuration
-    attr_accessor :force_lowercase,
+    attr_accessor \
+      :force_lowercase,
       # :default_parser,
-      :mentions_table
+      :mentions_table,
+      :event_publisher_class
 
     def initialize
       @force_lowercase = false
       # @default_parser = DefaultParser
       @mentions_table = :acts_as_mentionable_mentions
+      @event_publisher_class = EventPublisher
     end
   end
 

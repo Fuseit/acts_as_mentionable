@@ -25,7 +25,7 @@ module ActsAsMentionable
     validate :validate_mentionable
 
     def self.remove_mentionables_for_mentioner mentioner, mentionables
-      by_mentioners(mentioner).by_mentionables(mentionables).delete_all!
+      by_mentioners(mentioner).by_mentionables(mentionables).delete_all
     end
 
     def self.add_mentionables_for_mentioner mentioner, mentionables

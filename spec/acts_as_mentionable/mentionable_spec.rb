@@ -1,54 +1,32 @@
 RSpec.describe ActsAsMentionable::Mentionable do
-  let(:instance) { model_class.new }
+  let(:mentionable) { Mentionable.create! }
+  let(:mentioners) { 2.times.map { Mentioner.create! } }
 
-  let(:model_class) { ActsAsMentionable::DummyMentioner }
+  let :mentions do
+    ActsAsMentionable::Mention.create! mentioner: Mentioner.create!, mentionable: Mentionable.create!
+
+    mentioners.map do |mentioner|
+      ActsAsMentionable::Mention.create! mentioner: mentioner, mentionable: mentionable
+    end
+  end
 
   describe '#mentions' do
-    subject(:mentions) { instance.mentions }
+    subject(:mentionable_mentions) { mentionable.mentions }
 
-    let(:instance) { model_class.create! }
-
-    let(:mentioners) { ActsAsMentionable::Mentioner.create([{},{}]) }
-
-    let :expected_mentions do
-      mentioners.map do |mentioner|
-        ActsAsMentionable::Mention.create! mentioner: mentioner, mentionable: instance
-      end
-    end
-
-    before do
-      stub_const 'ActsAsMentionable::FooModel', model_class
-
-      ActsAsMentionable::Mention.create! mentioner: mentioners.first, mentionable: model_class.create!
-    end
-
-    it { is_expected.to eq expected_mentions }
+    it { is_expected.to eq mentions }
   end
 
   describe '#mentionable?' do
-    subject(:mentionable) { instance.mentionable? }
+    subject(:mentionable) { Mentionable.new.mentionable? }
 
     it { is_expected.to be_truthy }
   end
 
   describe '#mentioners' do
-    subject(:mentioners) { instance.mentioners }
+    subject(:mentionable_mentioners) { mentionable.mentioners }
 
-    let(:expected_mentioners) { double }
+    before { mentions }
 
-    let :retrieve_polymorphic_instance do
-      instance_double 'ActsAsMentionable::RetrievePolymorphic', call: expected_mentioners
-    end
-
-    before do
-      allow(ActsAsMentionable::RetrievePolymorphic).to receive(:new) { retrieve_polymorphic_instance }
-    end
-
-    it 'invokes RetrievePolymorphic and returns its result', :aggregate_failures do
-      expect(mentioners).to eq expected_mentioners
-
-      expect(ActsAsMentionable::RetrievePolymorphic).to \
-        have_received(:new).with(instance.mentions, :mentioner)
-    end
+    it { is_expected.to eq mentioners }
   end
 end

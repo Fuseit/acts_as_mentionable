@@ -19,22 +19,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version     = '>= 2.3.4'
 
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  # if spec.respond_to?(:metadata)
-  #   spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
-  # else
-  #   raise "RubyGems 2.0 or newer is required to protect against " \
-  #     "public gem pushes."
-  # end
-
-  spec.add_runtime_dependency 'activerecord', ['~> 5.0']
-  spec.add_runtime_dependency 'wisper'
-  spec.add_development_dependency 'wisper-rspec'
-  spec.add_development_dependency 'sqlite3'
-  spec.add_development_dependency 'rspec-its'
-  spec.add_development_dependency 'database_cleaner'
-  spec.add_development_dependency 'bundler', "~> 1.16"
+  spec.add_runtime_dependency 'activerecord', '~> 4.2'
   spec.add_development_dependency 'rake', "~> 10.0"
-  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'bundler', '~> 1.17'
+  spec.add_development_dependency 'rspec', '~> 3.8'
+  spec.add_development_dependency 'rspec-its', '~> 1.2'
+  spec.add_development_dependency 'sqlite3', '~> 1.3'
+  spec.add_development_dependency 'database_cleaner', '~> 1.7'
 end

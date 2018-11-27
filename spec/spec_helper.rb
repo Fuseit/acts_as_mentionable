@@ -1,26 +1,20 @@
-$LOAD_PATH << '.' unless $LOAD_PATH.include?('.')
-$LOAD_PATH.unshift(File.expand_path('../../lib', __FILE__))
-
-# require 'logger'
-# require 'rails'
-require 'rspec/its'
-require 'database_cleaner'
 require 'bundler/setup'
 require 'acts_as_mentionable'
-require 'wisper/rspec/matchers'
+require 'rspec/its'
+require 'database_cleaner'
 
-Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
+begin
+  require 'byebug'
+rescue LoadError
+end
+
+Dir['./spec/support/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
-
-  config.include Wisper::RSpec::BroadcastMatcher
-  config.include RequestSpecHelper, type: :request
-
-
-  config.example_status_persistence_file_path = ".rspec_status"
+  # Enable flags like --only-failures and --next-failure
+  config.example_status_persistence_file_path = '.rspec_status'
   config.raise_errors_for_deprecations!
   config.disable_monkey_patching!
-
 
   config.expect_with :rspec do |c|
     c.syntax = :expect

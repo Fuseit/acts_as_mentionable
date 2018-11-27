@@ -2,28 +2,30 @@ PATH
   remote: .
   specs:
     acts_as_mentionable (0.1.0)
-      activerecord (~> 5.0)
-      wisper
+      activerecord (~> 4.2)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    activemodel (5.2.1)
-      activesupport (= 5.2.1)
-    activerecord (5.2.1)
-      activemodel (= 5.2.1)
-      activesupport (= 5.2.1)
-      arel (>= 9.0)
-    activesupport (5.2.1)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 0.7, < 2)
+    activemodel (4.2.10)
+      activesupport (= 4.2.10)
+      builder (~> 3.1)
+    activerecord (4.2.10)
+      activemodel (= 4.2.10)
+      activesupport (= 4.2.10)
+      arel (~> 6.0)
+    activesupport (4.2.10)
+      i18n (~> 0.7)
       minitest (~> 5.1)
+      thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
-    arel (9.0.0)
+    arel (6.0.4)
+    builder (3.2.3)
+    byebug (10.0.2)
     concurrent-ruby (1.1.3)
     database_cleaner (1.7.0)
     diff-lcs (1.3)
-    i18n (1.1.1)
+    i18n (0.9.5)
       concurrent-ruby (~> 1.0)
     minitest (5.11.3)
     rake (10.5.0)
@@ -47,21 +49,19 @@ GEM
     thread_safe (0.3.6)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    wisper (2.0.0)
-    wisper-rspec (1.1.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   acts_as_mentionable!
-  bundler (~> 1.16)
-  database_cleaner
+  bundler (~> 1.17)
+  byebug
+  database_cleaner (~> 1.7)
   rake (~> 10.0)
-  rspec
-  rspec-its
-  sqlite3
-  wisper-rspec
+  rspec (~> 3.8)
+  rspec-its (~> 1.2)
+  sqlite3 (~> 1.3)
 
 BUNDLED WITH
-   1.16.4
+   1.17.1
