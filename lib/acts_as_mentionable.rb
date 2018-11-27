@@ -1,5 +1,7 @@
 require 'acts_as_mentionable/version'
 
+require 'active_record'
+
 module ActsAsMentionable
-  # Your code goes here...
+
 end
