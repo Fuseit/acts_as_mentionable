@@ -30,6 +30,8 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'activerecord', ['~> 5.0']
   spec.add_runtime_dependency 'wisper'
+  spec.add_development_dependency 'wisper-rspec'
+  spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'rspec-its'
   spec.add_development_dependency 'database_cleaner'
   spec.add_development_dependency 'bundler', "~> 1.16"

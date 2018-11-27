@@ -1,25 +1,22 @@
 RSpec.describe ActsAsMentionable::Mention do
-  let(:comment) { ActsAsMentionable::DummyMentioner.create  }
-  let(:user) { ActsAsMentionable::DummyMentionee.create  }
+  let(:mentioner) { ActsAsMentionable::DummyMentioner.create  }
+  let(:mentionable) { ActsAsMentionable::DummyMentionee.create  }
 
-  let(:mention) { create :acts_as_mentionable_mention, mentioner: comment, mentionable: user }
+  let(:mention) { ActsAsMentionable::Mention.create mentioner: mentioner, mentionable: mentionable }
 
   shared_context 'with mentions', :with_mentions do
     before do
       mention
-      create :acts_as_mentionable_mention
+      ActsAsMentionable::Mention.create
     end
   end
 
   describe '.by_mentioners', :with_mentions do
     subject(:mentioners) { described_class.by_mentioners(mentioner).to_a }
 
-    let(:mentioner) { comment }
-
     it { is_expected.to eq [mention] }
 
     context 'when mentions does not exist' do
-      let(:mentioner) { user }
 
       it { is_expected.to be_empty }
     end
@@ -28,31 +25,28 @@ RSpec.describe ActsAsMentionable::Mention do
   describe '.by_mentionables', :with_mentions do
     subject(:mentionables) { described_class.by_mentionables(mentionable).to_a }
 
-    let(:mentionable) { user }
-
     it { is_expected.to eq [mention] }
 
     context 'when mentions does not exist' do
-      let(:mentionable) { comment }
 
       it { is_expected.to be_empty }
     end
   end
 
   describe '.remove_mentionables_for_mentioner', :with_mentions do
-    subject(:remove) { -> { described_class.remove_mentionables_for_mentioner comment, user } }
+    subject(:remove) { -> { described_class.remove_mentionables_for_mentioner mentioner, mentionable } }
 
     it { is_expected.to change { described_class.count }.by(-1) }
     it { is_expected.to change { described_class.exists? mention.id }.from(true).to(false) }
   end
 
   describe '.add_mentionables_for_mentioner', :with_mentions do
-    subject(:add) { -> { described_class.add_mentionables_for_mentioner comment, new_user } }
+    subject(:add) { -> { described_class.add_mentionables_for_mentioner mentioner, new_mentionable } }
 
-    let(:new_user) { ActsAsMentionable::DummyMentionee.create }
+    let(:new_mentionable) { ActsAsMentionable::DummyMentionee.create }
 
     it { is_expected.to change { described_class.count }.by(1) }
-    it { is_expected.to change { described_class.by_mentionables(new_user).exists? }.from(false).to(true) }
+    it { is_expected.to change { described_class.by_mentionables(new_mentionable).exists? }.from(false).to(true) }
   end
 
   describe '#mentioner' do
@@ -68,7 +62,7 @@ RSpec.describe ActsAsMentionable::Mention do
   end
 
   describe 'validation' do
-    subject(:mention) { build :acts_as_mentionable_mention, mentioner: comment, mentionable: user }
+    subject(:mention) { ActsAsMentionable::Mention.new(mentioner: mentioner, mentionable: mentionable)}
 
     let(:respond_to_mentioner) { true }
     let(:respond_to_mentionable) { true }
@@ -76,10 +70,10 @@ RSpec.describe ActsAsMentionable::Mention do
     let(:is_mentionable) { true }
 
     before do
-      allow(comment).to receive(:respond_to?).with(:mentioner?) { respond_to_mentioner }
-      allow(user).to receive(:respond_to?).with(:mentionable?) { respond_to_mentionable }
-      allow(comment).to receive(:mentioner?) { is_mentioner }
-      allow(user).to receive(:mentionable?) { is_mentionable }
+      allow(mentioner).to receive(:respond_to?).with(:mentioner?) { respond_to_mentioner }
+      allow(mentionable).to receive(:respond_to?).with(:mentionable?) { respond_to_mentionable }
+      allow(mentioner).to receive(:mentioner?) { is_mentioner }
+      allow(mentionable).to receive(:mentionable?) { is_mentionable }
     end
 
     it { is_expected.to be_valid }

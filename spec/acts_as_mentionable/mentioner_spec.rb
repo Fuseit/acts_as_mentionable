@@ -1,13 +1,7 @@
 RSpec.describe ActsAsMentionable::Mentioner do
   let(:instance) { model_class.new }
 
-  let :model_class do
-    Class.new ActiveRecord::Base do
-      self.table_name = 'companies'
-
-      include ActsAsMentionable::Mentioner
-    end
-  end
+  let(:model_class) { ActsAsMentionable::DummyMentioner }
 
   let(:changed) { false }
   let(:changes) { double }
@@ -27,7 +21,7 @@ RSpec.describe ActsAsMentionable::Mentioner do
 
     let(:instance) { model_class.create! }
 
-    let(:mentionables) { create_list :user, 2 }
+    let(:mentionables) { ActsAsMentionable::Mentionee.create [{ },{ }] }
 
     let :expected_mentions do
       mentionables.map do |mentionable|

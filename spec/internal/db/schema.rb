@@ -1,7 +1,7 @@
 ActiveRecord::Schema.define version: 0 do
   create_table ActsAsMentionable.mentions_table do |t|
-    t.references :mentionee, polymorphic: true
-    t.references :mentioner, polymorphic: true
+    t.references :mentionee, polymorphic: true, index: false
+    t.references :mentioner, polymorphic: true, index: false
     t.timestamps null: false
   end
 

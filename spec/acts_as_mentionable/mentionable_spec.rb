@@ -1,20 +1,14 @@
 RSpec.describe ActsAsMentionable::Mentionable do
   let(:instance) { model_class.new }
 
-  let :model_class do
-    Class.new ActiveRecord::Base do
-      self.table_name = 'companies'
-
-      include ActsAsMentionable::Mentionable
-    end
-  end
+  let(:model_class) { ActsAsMentionable::DummyMentioner }
 
   describe '#mentions' do
     subject(:mentions) { instance.mentions }
 
     let(:instance) { model_class.create! }
 
-    let(:mentioners) { create_list :comment, 2 }
+    let(:mentioners) { ActsAsMentionable::Mentioner.create([{},{}]) }
 
     let :expected_mentions do
       mentioners.map do |mentioner|

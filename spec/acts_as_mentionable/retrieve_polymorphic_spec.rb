@@ -10,12 +10,14 @@ RSpec.describe ActsAsMentionable::RetrievePolymorphic do
     let(:bar) { ActsAsMentionable::BarModel.create! }
 
     def dummy_model_class
-      Class.new ActiveRecord::Base do
-        self.table_name = 'companies'
+      # Class.new ActiveRecord::Base do
+      #   self.table_name = 'companies'
 
-        include ActsAsMentionable::Mentioner
-        include ActsAsMentionable::Mentionable
-      end
+      #   include ActsAsMentionable::Mentioner
+      #   include ActsAsMentionable::Mentionable
+      # end
+      # TODO: fix me
+      ActsAsMentionable::DummyMentioner
     end
 
     before do
