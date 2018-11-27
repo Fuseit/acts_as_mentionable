@@ -6,6 +6,11 @@
 /pkg/
 /spec/reports/
 /tmp/
+/spec/debug.log
+/spec/internal/config/database.yml
+/Gemfile.lock
 
 # rspec failure tracking
 .rspec_status
+
+.byebug_history
