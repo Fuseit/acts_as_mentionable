@@ -1,10 +1,14 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 # Specify your gem's dependencies in acts_as_mentionable.gemspec
 gemspec
 
-group :local_development do
-  gem 'byebug'
+group :development do
+  gem 'fuse-dev-tools', github: 'Fuseit/fuse-dev-tools'
+  gem 'pry'
+  gem 'pry-byebug'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
 end
