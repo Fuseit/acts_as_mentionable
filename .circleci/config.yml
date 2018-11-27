@@ -7,7 +7,7 @@ jobs:
   build:
     docker:
        - image: circleci/ruby:2.3.8-jessie
-      
+
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
       # documented at https://circleci.com/docs/2.0/circleci-images/
@@ -45,7 +45,7 @@ jobs:
           command: |
             bundle exec fuse-dev-tools git validate_pull_request
       # TODO: Re-enable after following issue addressed.
-      # NOTE: https://github.com/sickill/rainbow/issues/87 
+      # NOTE: https://github.com/sickill/rainbow/issues/87
       # - run:
       #     name: Run Rubocop
       #     command: |
@@ -55,7 +55,7 @@ jobs:
           command: |
             mkdir /tmp/test-results
             TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings)"
-            
+
             bundle exec rspec --format progress \
                             --format RspecJunitFormatter \
                             --out /tmp/test-results/rspec.xml \
