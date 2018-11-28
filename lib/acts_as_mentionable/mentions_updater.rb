@@ -12,6 +12,7 @@ module ActsAsMentionable
         remove_old_mentionables
         add_new_mentionables
         broadcast_events_after_commit
+        yield if block_given?
       end
     end
 

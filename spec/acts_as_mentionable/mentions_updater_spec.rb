@@ -1,9 +1,10 @@
 RSpec.describe ActsAsMentionable::MentionsUpdater do
   describe '#call' do
-    subject(:update_mentions) { -> { described_class.new(mentioner, changes).call } }
+    subject(:update_mentions) { -> { described_class.new(mentioner, changes).call(&block) } }
 
     let(:mentioner) { Mentioner.create! }
     let(:changes) { { added: added, removed: removed } }
+    let(:block) { nil }
     let(:added) { [added_mentionable] }
     let(:removed) { [removed_mentionable] }
     let(:added_mentionable) { Mentionable.create! }
@@ -59,6 +60,14 @@ RSpec.describe ActsAsMentionable::MentionsUpdater do
         expect(ActsAsMentionable::Mention).not_to have_received :remove_mentionables_for_mentioner
         expect(ActsAsMentionable::Mention).to have_received :add_mentionables_for_mentioner
       end
+    end
+
+    context 'when block provided', skip_transactions: true do
+      let(:block) { -> { ActsAsMentionable::Mention.connection.current_transaction.open? } }
+      let(:added) { [] }
+      let(:removed) { [] }
+
+      it { expect(update_mentions.call).to be_truthy }
     end
   end
 end

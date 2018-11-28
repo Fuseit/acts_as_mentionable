@@ -95,7 +95,7 @@ RSpec.describe ActsAsMentionable::Mentioner do
 
     before do
       allow(ActsAsMentionable::MentionsUpdater).to receive(:new) { mentions_updater }
-      allow(ActsAsMentionable::TransactionCallbacks).to receive(:on_committed).and_yield
+      allow(mentions_updater).to receive(:call) { |&block| block.call }
     end
 
     it 'does not save changes', :aggregate_failures do
@@ -113,8 +113,24 @@ RSpec.describe ActsAsMentionable::Mentioner do
 
         expect(ActsAsMentionable::MentionsUpdater).to have_received(:new).with(instance, changes).ordered
         expect(mentions_updater).to have_received(:call).ordered
-        expect(ActsAsMentionable::TransactionCallbacks).to have_received(:on_committed).ordered
         expect(mentionables_manipulator).to have_received(:fix_changes!).ordered
+        expect(mentionables_manipulator).not_to have_received(:replace)
+      end
+
+      context 'and transaction is rolled back' do
+        let(:current) { double }
+
+        before do
+          allow(ActsAsMentionable::TransactionCallbacks).to receive(:on_rolled_back).and_yield
+          allow(mentionables_manipulator).to receive(:current) { current }
+        end
+
+        it 'restores mentionables manipulator state', :aggregate_failures do
+          save_mentions
+
+          expect(ActsAsMentionable::MentionablesManipulator).to have_received(:new).twice.ordered
+          expect(mentionables_manipulator).to have_received(:replace).with(current).ordered
+        end
       end
     end
   end

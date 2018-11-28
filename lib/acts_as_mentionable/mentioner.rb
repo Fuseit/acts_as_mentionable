@@ -35,8 +35,9 @@ module ActsAsMentionable
     def save_mentions
       return false unless mentionables_manipulator.changed?
 
-      MentionsUpdater.new(self, mentionables_manipulator.changes).call
-      TransactionCallbacks.on_committed { mentionables_manipulator.fix_changes! }
+      MentionsUpdater.new(self, mentionables_manipulator.changes).call do
+        fix_mentionables_changes!
+      end
 
       true
     end
@@ -45,6 +46,20 @@ module ActsAsMentionable
 
       def mentionables_manipulator
         @mentionables_manipulator ||= MentionablesManipulator.new mentionables
+      end
+
+      def refresh_mentionables_manipulator!
+        remove_instance_variable :@mentionables_manipulator
+      end
+
+      def fix_mentionables_changes!
+        mentionables_manipulator.fix_changes!
+
+        TransactionCallbacks.on_rolled_back do
+          current = mentionables_manipulator.current
+          refresh_mentionables_manipulator!
+          mentionables_manipulator.replace current
+        end
       end
   end
 end
