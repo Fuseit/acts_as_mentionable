@@ -1,8 +1,17 @@
 require 'bundler/setup'
+require 'rspec/its'
+require 'database_cleaner'
 require 'acts_as_mentionable'
 
+begin
+  require 'pry-byebug'
+rescue LoadError
+end
+
+Dir['./spec/support/**/*.rb'].each { |file| require file }
+
 RSpec.configure do |config|
-  # Disable RSpec exposing methods globally on `Module` and `main`
+  config.raise_errors_for_deprecations!
   config.disable_monkey_patching!
 
   config.expect_with :rspec do |c|

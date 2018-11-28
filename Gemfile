@@ -8,6 +8,7 @@ gemspec
 group :development do
   gem 'fuse-dev-tools', github: 'Fuseit/fuse-dev-tools'
   gem 'pry'
+  gem 'pry-byebug'
   gem 'rubocop'
   gem 'rubocop-rspec'
 end
