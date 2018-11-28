@@ -14,5 +14,9 @@
 module ActsAsMentionable
   class Mention < ::ActiveRecord::Base
     self.table_name = ActsAsMentionable.mentions_table
+
+    belongs_to :mentionable, polymorphic: true
+
+    scope :by_mentionables, ->(mentionables) { where mentionable: mentionables }
   end
 end
