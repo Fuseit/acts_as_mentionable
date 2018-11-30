@@ -1,7 +1,6 @@
 require 'acts_as_mentionable'
 
 class ActsAsMentionableMigration < ActiveRecord::Migration
-
   def self.change
     create_table ActsAsMentionable.mentions_table do |t|
       t.reference :mentionable, index: { name: 'mentions_mentionable_idx' }
@@ -9,6 +8,9 @@ class ActsAsMentionableMigration < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :acts_as_mentionable_mentions, [:mentionable_id, :mentionable_type, :mentioner_id, :mentioner_type], name: 'mentions_mentionable_mentioner_idx', unique: true
+    add_index ActsAsMentionable.mentions_table,
+      %i[mentionable_id mentionable_type mentioner_id mentioner_type],
+      name: 'mentions_mentionable_mentioner_idx',
+      unique: true
   end
 end

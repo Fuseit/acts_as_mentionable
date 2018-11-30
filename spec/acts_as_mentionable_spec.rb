@@ -1,6 +1,6 @@
 RSpec.describe ActsAsMentionable do
   it 'has a version number' do
-    expect(ActsAsMentionable::VERSION).to match /^\d+\.\d+\.\d+$/
+    expect(ActsAsMentionable::VERSION).to match(/^\d+\.\d+\.\d+$/)
   end
 
   it { expect { described_class::Mention }.not_to raise_error }
