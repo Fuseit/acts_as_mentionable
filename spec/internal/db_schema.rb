@@ -14,7 +14,7 @@ ActiveRecord::Schema.define version: 0 do
   end
 
   add_index ActsAsMentionable.mentions_table,
-    %i(mentionable_type mentionable_id mentioner_type mentioner_id),
+    %i[mentionable_type mentionable_id mentioner_type mentioner_id],
     unique: true,
     name: :index_mentions_on_mentionable_and_mentioner
 end

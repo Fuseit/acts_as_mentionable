@@ -5,7 +5,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  config.around :each do |example|
+  config.around do |example|
     if example.metadata[:skip_transactions]
       example.run
     else

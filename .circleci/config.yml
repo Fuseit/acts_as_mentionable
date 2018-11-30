@@ -42,12 +42,10 @@ jobs:
           name: Run Pull Request Validator
           command: |
             bundle exec fuse-dev-tools git validate_pull_request
-      # TODO: Re-enable after following issue addressed.
-      # NOTE: https://github.com/sickill/rainbow/issues/87
-      # - run:
-      #     name: Run Rubocop
-      #     command: |
-      #       bundle exec rubocop
+      - run:
+          name: Run Rubocop
+          command: |
+            bundle exec rubocop
       - run:
           name: Run Rspec
           command: |
