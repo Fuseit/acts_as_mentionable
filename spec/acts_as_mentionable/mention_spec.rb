@@ -1,7 +1,7 @@
 RSpec.describe ActsAsMentionable::Mention do
   let(:mentioner) { MentionerModel.create! }
   let(:mentionable) { MentionableModel.create! }
-  let(:dummy) { PlainModel.create! }
+  let(:plain_model) { PlainModel.create! }
 
   let(:mention) { described_class.create! mentioner: mentioner, mentionable: mentionable }
 
@@ -20,7 +20,7 @@ RSpec.describe ActsAsMentionable::Mention do
     it { is_expected.to eq [mention] }
 
     context 'when mentions does not exist' do
-      let(:provided_mentioner) { dummy }
+      let(:provided_mentioner) { plain_model }
 
       it { is_expected.to be_empty }
     end
@@ -34,10 +34,26 @@ RSpec.describe ActsAsMentionable::Mention do
     it { is_expected.to eq [mention] }
 
     context 'when mentions does not exist' do
-      let(:provided_mentionable) { dummy }
+      let(:provided_mentionable) { plain_model }
 
       it { is_expected.to be_empty }
     end
+  end
+
+  describe '.remove_mentionables_for_mentioner', :with_mentions do
+    subject(:remove) { -> { described_class.remove_mentionables_for_mentioner mentioner, mentionable } }
+
+    it { is_expected.to change { described_class.count }.by(-1) }
+    it { is_expected.to change { described_class.exists? mention.id }.from(true).to(false) }
+  end
+
+  describe '.add_mentionables_for_mentioner', :with_mentions do
+    subject(:add) { -> { described_class.add_mentionables_for_mentioner mentioner, new_mentionable } }
+
+    let(:new_mentionable) { MentionableModel.create! }
+
+    it { is_expected.to change { described_class.count }.by(1) }
+    it { is_expected.to change { described_class.by_mentionables(new_mentionable).exists? }.from(false).to(true) }
   end
 
   describe '#mentioner' do
@@ -77,7 +93,7 @@ RSpec.describe ActsAsMentionable::Mention do
     end
 
     context 'when mentioner is not a mentioner' do
-      let(:provided_mentioner) { dummy }
+      let(:provided_mentioner) { plain_model }
 
       it 'is invalid', :aggregate_failures do
         expect(mention).to be_invalid
@@ -95,7 +111,7 @@ RSpec.describe ActsAsMentionable::Mention do
     end
 
     context 'when mentionable is not a mentionable' do
-      let(:provided_mentionable) { dummy }
+      let(:provided_mentionable) { plain_model }
 
       it 'is invalid', :aggregate_failures do
         expect(mention).to be_invalid

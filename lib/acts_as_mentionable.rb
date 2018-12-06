@@ -12,10 +12,13 @@ module ActsAsMentionable
   extend ActiveSupport::Autoload
 
   autoload :Mention
+  autoload :MentionablesManipulator
+  autoload :MentionsUpdater
   autoload :Mentionable
   autoload :Mentioner
   autoload :ActiveRecordMethods
   autoload :RetrievePolymorphic
+  autoload :TransactionCallbacks
 
   def self.setup
     @configuration ||= Configuration.new
