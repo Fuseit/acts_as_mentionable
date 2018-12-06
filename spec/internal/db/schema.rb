@@ -7,7 +7,8 @@ ActiveRecord::Schema.define version: 0 do
 
     t.belongs_to :mentioner,
       polymorphic: true,
-      index: { name: :index_mentions_on_mentioner }
+      index: { name: :index_mentions_on_mentioner },
+      null: false
 
     t.timestamps null: false
   end

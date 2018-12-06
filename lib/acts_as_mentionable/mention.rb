@@ -24,6 +24,15 @@ module ActsAsMentionable
     validate :validate_mentioner
     validate :validate_mentionable
 
+    def self.remove_mentionables_for_mentioner mentioner, mentionables
+      by_mentioners(mentioner).by_mentionables(mentionables).delete_all
+    end
+
+    def self.add_mentionables_for_mentioner mentioner, mentionables
+      attributes_list = Array(mentionables).map { |mentionable| { mentionable: mentionable } }
+      by_mentioners(mentioner).create! attributes_list
+    end
+
     private
 
       def validate_mentioner
