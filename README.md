@@ -20,6 +20,17 @@ Or install it yourself as:
 
     $ gem install acts_as_mentionable
 
+#### Post Installation
+
+Install migrations
+```
+rake acts_as_mentionable_engine:install:migrations
+```
+Review the generated migrations then migrate:
+```
+rake db:migrate
+```
+
 ## Usage
 
 TODO: Write usage instructions here.
