@@ -15,8 +15,23 @@ module ActsAsMentionable
   class Mention < ::ActiveRecord::Base
     self.table_name = ActsAsMentionable.mentions_table
 
+    belongs_to :mentioner, polymorphic: true
     belongs_to :mentionable, polymorphic: true
 
+    scope :by_mentioners, ->(mentioners) { where mentioner: mentioners }
     scope :by_mentionables, ->(mentionables) { where mentionable: mentionables }
+
+    validate :validate_mentioner
+    validate :validate_mentionable
+
+    private
+
+      def validate_mentioner
+        errors.add :mentioner, :invalid unless mentioner.respond_to?(:mentioner?) && mentioner.mentioner?
+      end
+
+      def validate_mentionable
+        errors.add :mentionable, :invalid unless mentionable.respond_to?(:mentionable?) && mentionable.mentionable?
+      end
   end
 end
