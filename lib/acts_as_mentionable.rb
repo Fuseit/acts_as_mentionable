@@ -15,6 +15,7 @@ module ActsAsMentionable
   autoload :Mentionable
   autoload :Mentioner
   autoload :ActiveRecordMethods
+  autoload :RetrievePolymorphic
 
   def self.setup
     @configuration ||= Configuration.new

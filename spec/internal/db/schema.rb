@@ -24,4 +24,8 @@ ActiveRecord::Schema.define version: 0 do
   create_table :mentioner_models do |t|
     t.timestamps null: false
   end
+
+  create_table :plain_models do |t|
+    t.timestamps null: false
+  end
 end

@@ -1,6 +1,7 @@
 RSpec.describe ActsAsMentionable::Mentionable do
   let(:mentionable) { MentionableModel.create! }
-  let(:mentions) { [ActsAsMentionable::Mention.create!(mentionable: mentionable)] }
+  let(:mentioner) { MentionerModel.create! }
+  let(:mentions) { [ActsAsMentionable::Mention.create!(mentionable: mentionable, mentioner: mentioner)] }
 
   describe '#mentions' do
     subject(:mentionable_mentions) { mentionable.mentions }
