@@ -39,10 +39,12 @@ module ActsAsMentionable
 
   class Configuration
     attr_accessor \
-      :mentions_table
+      :mentions_table,
+      :mentions_updated_callback
 
     def initialize
       @mentions_table = :acts_as_mentionable_mentions
+      @mentions_updated_callback = ->(_mentioner, _changes) { nil }
     end
   end
 
