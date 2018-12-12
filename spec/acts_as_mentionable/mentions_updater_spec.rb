@@ -17,6 +17,7 @@ RSpec.describe ActsAsMentionable::MentionsUpdater do
       allow(ActsAsMentionable::Mention).to receive(:remove_mentionables_for_mentioner).and_call_original
       allow(ActsAsMentionable::Mention).to receive(:add_mentionables_for_mentioner).and_call_original
       allow(ActsAsMentionable::TransactionCallbacks).to receive(:on_committed).and_yield
+      allow(ActsAsMentionable.mentions_updated_callback).to receive(:call)
     end
 
     def mentionable_exists? mentionable
@@ -25,6 +26,24 @@ RSpec.describe ActsAsMentionable::MentionsUpdater do
 
     it { is_expected.to change { mentionable_exists? removed_mentionable }.from(true).to(false) }
     it { is_expected.to change { mentionable_exists? added_mentionable }.from(false).to(true) }
+
+    it 'invokes mentions_updated_callback after transaction committed', :aggregate_failures do
+      update_mentions.call
+
+      expect(ActsAsMentionable::TransactionCallbacks).to have_received(:on_committed).ordered
+      expect(ActsAsMentionable.mentions_updated_callback).to have_received(:call).with(mentioner, changes).ordered
+    end
+
+    context 'when transaction is not committed' do
+      before do
+        allow(ActsAsMentionable::TransactionCallbacks).to receive(:on_committed) { nil }
+      end
+
+      it 'does not invoke mentions_updated_callback' do
+        update_mentions.call
+        expect(ActsAsMentionable.mentions_updated_callback).not_to have_received :call
+      end
+    end
 
     context 'when nothing added' do
       let(:added) { [] }

@@ -11,6 +11,7 @@ module ActsAsMentionable
       Mention.transaction do
         remove_old_mentionables
         add_new_mentionables
+        invoke_mentions_updated_callback
         yield if block_given?
       end
     end
@@ -23,6 +24,12 @@ module ActsAsMentionable
 
       def add_new_mentionables
         Mention.add_mentionables_for_mentioner mentioner, changes[:added] unless changes[:added].empty?
+      end
+
+      def invoke_mentions_updated_callback
+        TransactionCallbacks.on_committed do
+          ActsAsMentionable.mentions_updated_callback.call mentioner, changes
+        end
       end
   end
 end
