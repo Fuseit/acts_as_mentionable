@@ -13,11 +13,13 @@ RSpec.describe ActsAsMentionable::Mentioner do
 
   let(:changed) { false }
   let(:changes) { double }
+  let(:current) { double }
 
   let :mentionables_manipulator do
     instance_spy 'ActsAsMentionable::MentionablesManipulator',
       changed?: changed,
-      changes: changes
+      changes: changes,
+      current: current
   end
 
   before do
@@ -93,7 +95,8 @@ RSpec.describe ActsAsMentionable::Mentioner do
 
     before do
       allow(ActsAsMentionable::MentionsUpdater).to receive(:new) { mentions_updater }
-      allow(mentions_updater).to receive(:call) { |&block| block.call }
+      allow(mentions_updater).to receive(:call).and_yield
+      allow(ActsAsMentionable::TransactionCallbacks).to receive(:on_rolled_back)
     end
 
     it 'does not save changes', :aggregate_failures do
@@ -118,15 +121,13 @@ RSpec.describe ActsAsMentionable::Mentioner do
 
       it 'does not invoke #replace on MentionablesManipulator' do
         save_mentions
+
         expect(mentionables_manipulator).not_to have_received(:replace)
       end
 
       context 'and transaction is rolled back' do
-        let(:current) { double }
-
         before do
           allow(ActsAsMentionable::TransactionCallbacks).to receive(:on_rolled_back).and_yield
-          allow(mentionables_manipulator).to receive(:current) { current }
         end
 
         it 'restores mentionables manipulator state', :aggregate_failures do

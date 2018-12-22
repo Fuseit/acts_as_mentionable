@@ -31,6 +31,10 @@ module ActsAsMentionable
       @on_rolled_back_block = on_rolled_back_block
     end
 
+    def before_committed!
+      true
+    end
+
     def committed! _should_run_callbacks = true
       on_committed_block&.call
     end

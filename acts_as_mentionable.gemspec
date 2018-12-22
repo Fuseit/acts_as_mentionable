@@ -25,7 +25,7 @@ Gem::Specification.new do |spec|
 
   # Need to support different ActiveRecord versions i.e. 4.2, 5+
   # Differentiate through versioned code?
-  spec.add_runtime_dependency 'activerecord', '~> 4.2'
+  spec.add_runtime_dependency 'activerecord', '~> 5.0'
 
   spec.add_development_dependency 'bundler', '~> 1.17'
   spec.add_development_dependency 'database_cleaner', '~> 1.7'
