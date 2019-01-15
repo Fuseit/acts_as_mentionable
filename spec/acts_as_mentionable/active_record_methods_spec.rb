@@ -24,12 +24,15 @@ RSpec.describe ActsAsMentionable::ActiveRecordMethods do
   end
 
   describe '.acts_as_mentioner' do
-    subject { active_record_class.acts_as_mentioner :body }
+    subject(:mentioner_model) { active_record_class.acts_as_mentioner :body }
 
     before { allow(active_record_class).to receive(:has_many) }
 
     it { is_expected.to respond_to :mention_field }
     it { is_expected.to respond_to :mention_parsed_field }
+    it { expect(mentioner_model.new).to respond_to :need_retrieve_mentions? }
+    it { expect(mentioner_model.new).to respond_to :retrieve_mentions_callback }
+
     it { is_expected.to include ActsAsMentionable::Mentioner }
     it { is_expected.not_to include ActsAsMentionable::Mentionable }
   end
