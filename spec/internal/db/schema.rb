@@ -19,10 +19,13 @@ ActiveRecord::Schema.define version: 0 do
     name: :index_mentions_on_mentionable_and_mentioner
 
   create_table :mentionable_models do |t|
+    t.string :username
     t.timestamps null: false
   end
 
   create_table :mentioner_models do |t|
+    t.text :body
+    t.text :parsed_body
     t.timestamps null: false
   end
 

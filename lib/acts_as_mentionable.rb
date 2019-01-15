@@ -19,6 +19,7 @@ module ActsAsMentionable
   autoload :ActiveRecordMethods
   autoload :RetrievePolymorphic
   autoload :TransactionCallbacks
+  autoload :MentionerParser
 
   def self.setup
     @configuration ||= Configuration.new
