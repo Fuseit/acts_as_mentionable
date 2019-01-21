@@ -16,6 +16,12 @@ module ActsAsMentionable
         class_eval do
           cattr_reader :mention_field, :mention_parsed_field
 
+          after_save :retrieve_mentions_callback, if: :need_retrieve_mentions? if self <= ActiveRecord::Base
+
+          define_method(:need_retrieve_mentions?) { send "parsed_#{self.class.mention_field}_changed?" }
+
+          define_method(:retrieve_mentions_callback) { nil }
+
           class_variable_set('@@mention_field', mention_field)
           class_variable_set('@@mention_parsed_field', "parsed_#{mention_field}".to_sym)
         end
