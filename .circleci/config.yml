@@ -35,14 +35,6 @@ jobs:
 
       # run tests
       - run:
-          name: Run Commit Message Checker
-          command: |
-            bundle exec fuse-dev-tools git validate_commit_message
-      - run:
-          name: Run Pull Request Validator
-          command: |
-            bundle exec fuse-dev-tools git validate_pull_request
-      - run:
           name: Run Rubocop
           command: |
             bundle exec rubocop
