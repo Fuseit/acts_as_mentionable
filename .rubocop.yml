@@ -1,5 +1,2 @@
-inherit_gem:
-  fuse-dev-tools: lib/fuse_dev_tools/templates/rubocop.yml
-
 AllCops:
   TargetRubyVersion: 2.3
