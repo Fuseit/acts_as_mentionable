@@ -27,6 +27,7 @@ Gem::Specification.new do |spec|
   # Differentiate through versioned code?
   spec.add_runtime_dependency 'activerecord', '~> 5.0'
 
+  spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'database_cleaner', '~> 1.7'
   spec.add_development_dependency 'rake', '~> 10.5'
   spec.add_development_dependency 'rspec', '~> 3.8'
