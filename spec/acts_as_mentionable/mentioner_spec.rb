@@ -52,8 +52,7 @@ RSpec.describe ActsAsMentionable::Mentioner do
     before { allow(instance).to receive(:save_mentions) }
 
     it "invokes #{method_name} on MentionablesManipulator", :aggregate_failures do
-      invoke_mentioner_method
-
+      expect(invoke_mentioner_method).to eq changes
       expect(mentionables_manipulator).to have_received(method_name).with(*mentionables)
       expect(instance).not_to have_received(:save_mentions)
     end
@@ -62,8 +61,7 @@ RSpec.describe ActsAsMentionable::Mentioner do
       let(:save) { true }
 
       it "invokes #{method_name} on MentionablesManipulator and saves changes", :aggregate_failures do
-        invoke_mentioner_method
-
+        expect(invoke_mentioner_method).to eq changes
         expect(mentionables_manipulator).to have_received(method_name).with(*mentionables).ordered
         expect(instance).to have_received(:save_mentions).ordered
       end
@@ -99,8 +97,7 @@ RSpec.describe ActsAsMentionable::Mentioner do
     end
 
     it 'does not save changes', :aggregate_failures do
-      save_mentions
-
+      expect(save_mentions).to be_nil
       expect(ActsAsMentionable::MentionsUpdater).not_to have_received(:new)
       expect(mentionables_manipulator).not_to have_received(:fix_changes!)
     end
@@ -114,8 +111,7 @@ RSpec.describe ActsAsMentionable::Mentioner do
       end
 
       it 'saves changes', :aggregate_failures do
-        save_mentions
-
+        expect(save_mentions).to eq changes
         expect(mentions_updater).to have_received(:call).ordered
         expect(mentionables_manipulator).to have_received(:fix_changes!).ordered
       end
