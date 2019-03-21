@@ -19,30 +19,34 @@ module ActsAsMentionable
 
     def mention *mentionables, save: false
       mentionables_manipulator.add(*mentionables)
-      save_mentions if save
+      return_changes { save_mentions if save }
     end
 
     def unmention *mentionables, save: false
       mentionables_manipulator.remove(*mentionables)
-      save_mentions if save
+      return_changes { save_mentions if save }
     end
 
     def replace_mentionables *mentionables, save: false
       mentionables_manipulator.replace(*mentionables)
-      save_mentions if save
+      return_changes { save_mentions if save }
     end
 
     def save_mentions
-      return false unless mentionables_manipulator.changed?
+      return unless mentionables_manipulator.changed?
 
-      MentionsUpdater.new(self, mentionables_manipulator.changes).call do
-        fix_mentionables_changes!
+      return_changes do
+        MentionsUpdater.new(self, mentionables_manipulator.changes).call do
+          fix_mentionables_changes!
+        end
       end
-
-      true
     end
 
     private
+
+      def return_changes
+        mentionables_manipulator.changes.tap { yield }
+      end
 
       def mentionables_manipulator
         @mentionables_manipulator ||= MentionablesManipulator.new mentionables
