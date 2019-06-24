@@ -32,7 +32,7 @@ module ActsAsMentionable
 
       def metionable_template mentionable, template
         if mentionable.respond_to?(:mentionable?) && mentionable.mentionable?
-          "<U+2063>@#{mentionable.send(mentionable.class.mentionable_field)}<U+2063>"
+          "*U+2063*@#{mentionable.send(mentionable.class.mentionable_field)}*U+2063*"
         else
           template
         end
