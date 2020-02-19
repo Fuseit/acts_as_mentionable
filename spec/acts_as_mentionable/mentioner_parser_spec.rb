@@ -7,7 +7,7 @@ RSpec.describe ActsAsMentionable::MentionerParser do
   describe '#parse' do
     subject(:parsed_mentionables) { described_class.new(mentioner).parse! }
 
-    let(:expected_body) { 'test *U+2063*@test*U+2063* and {@|123|wrong_model}|}' }
+    let(:expected_body) { 'test *U+200B*@test*U+200B* and {@|123|wrong_model}|}' }
 
     it { expect { parsed_mentionables }.to change { mentioner.reload.body }.to(expected_body) }
     it { is_expected.to include mentionable }
