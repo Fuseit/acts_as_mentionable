@@ -58,7 +58,7 @@ end
 ```
 
 Mentioner (`Comment`) model is expected to have two fields:
-1. The field, which contains, let's say, plain version of the comment - in the example above it's `body`. This field, by default, is rewritten by the parser and contains all the mentions as the plain text, e.g. `Hello, *U+2063*@john*U+2063*!`.  The character `*U+2063*` is used to show the beginning and end of a mention
+1. The field, which contains, let's say, plain version of the comment - in the example above it's `body`. This field, by default, is rewritten by the parser and contains all the mentions as the plain text, e.g. `Hello, *U+200B*@john*U+200B*!`.  The character `*U+200B*` is used to show the beginning and end of a mention
 2. The field, which contains comment with the mentions. It's named as the `parsed_*`, where `*` is meant to be the field, which contains plain version of the comment. In the example above it's named `parsed_body`. Mentions are recognized by the following template - `{#|RECORD_ID|RECORD_MODEL_NAME}`, where `RECORD_ID` is the ID of record being mentioned, for instance, user ID, and, `RECORD_MODEL_NAME` is the name of the model being mentioned, for instance, for `User` model it is `user`. According to this, `parsed_body` field may have the following value - `Hello, {#|42|user}!`.
 
 So, as you may have already noticed, the argument provided to the `#acts_as_mentioner` method is the name of the field, which is a plain version of the comment - `body`, and the name of the field, which contains mentions is generated automatically - `parsed_body`.
@@ -83,9 +83,9 @@ The argument `username` provided to `#acts_as_mentionable` method, is a field on
 user = User.create! id: 42, username: 'john'
 comment = Comment.create! parsed_body: 'Hello, {#|42|user}!'
 puts comment.body
-# => Hello, *U+2063*@john*U+2063*!
+# => Hello, *U+200B*@john*U+200B*!
 ```
-As you can see, it this case `{#|42|user}` in `parsed_body` is replaced by `*U+2063*` + `@` + `username` + `*U+2063*` field of the user in comment's `body`.
+As you can see, it this case `{#|42|user}` in `parsed_body` is replaced by `*U+200B*` + `@` + `username` + `*U+200B*` field of the user in comment's `body`.
 
 ### Retrieving mentions
 
