@@ -1,3 +1,3 @@
 module ActsAsMentionable
-  VERSION = '0.3.0-beta'.freeze
+  VERSION = '0.3.0'.freeze
 end
