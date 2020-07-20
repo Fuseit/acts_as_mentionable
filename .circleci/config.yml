@@ -13,12 +13,6 @@ jobs:
       - checkout
       - run: bundle install --path vendor/bundle
       - run:
-          name: Lint
-          command: |
-            bundle exec fuse-dev-tools git validate_commit_message
-            bundle exec fuse-dev-tools git validate_pull_request
-            bundle exec rubocop
-      - run:
           name: RSpec
           command: bundle exec rspec
 
@@ -56,40 +50,6 @@ jobs:
           name: RSpec
           command: bundle exec rspec
 
-  "ruby-2.6":
-    docker:
-      - image: circleci/ruby:2.6
-    working_directory: ~/acts_as_mentionable
-    steps:
-      - checkout
-      - run: bundle install --path vendor/bundle
-      - run:
-          name: Lint
-          command: |
-            bundle exec fuse-dev-tools git validate_commit_message
-            bundle exec fuse-dev-tools git validate_pull_request
-            bundle exec rubocop
-      - run:
-          name: RSpec
-          command: bundle exec rspec
-
-  "ruby-2.7":
-    docker:
-      - image: circleci/ruby:2.7
-    working_directory: ~/acts_as_mentionable
-    steps:
-      - checkout
-      - run: bundle install --path vendor/bundle
-      - run:
-          name: Lint
-          command: |
-            bundle exec fuse-dev-tools git validate_commit_message
-            bundle exec fuse-dev-tools git validate_pull_request
-            bundle exec rubocop
-      - run:
-          name: RSpec
-          command: bundle exec rspec
-
 workflows:
   version: 2
   build:
@@ -97,5 +57,3 @@ workflows:
       - "ruby-2.3"
       - "ruby-2.4"
       - "ruby-2.5"
-      - "ruby-2.6"
-      - "ruby-2.7"
