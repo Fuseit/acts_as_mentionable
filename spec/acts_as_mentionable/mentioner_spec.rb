@@ -93,7 +93,9 @@ RSpec.describe ActsAsMentionable::Mentioner do
 
     before do
       allow(ActsAsMentionable::MentionsUpdater).to receive(:new) { mentions_updater }
+      # rubocop:disable RSpec/Yield
       allow(mentions_updater).to receive(:call) { |&block| block.call }
+      # rubocop:enable RSpec/Yield
     end
 
     it 'does not save changes', :aggregate_failures do

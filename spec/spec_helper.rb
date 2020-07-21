@@ -3,12 +3,6 @@ require 'rspec/its'
 require 'database_cleaner'
 require 'acts_as_mentionable'
 
-begin
-  require 'pry-byebug'
-rescue LoadError
-  nil
-end
-
 Dir['./spec/support/**/*.rb'].each { |file| require file }
 
 RSpec.configure do |config|
